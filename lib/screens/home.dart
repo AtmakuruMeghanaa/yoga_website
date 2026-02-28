@@ -46,6 +46,9 @@ class HomePage extends StatelessWidget {
                           navButton(context, "About", '/about'),
                           navButton(context, "BMI", '/bmi'),
                           navButton(context, "Stress", '/stress'),
+
+                          // 🔥 NEW CHAT BUTTON
+                          chatButton(context),
                         ],
                       ),
                     ],
@@ -103,7 +106,7 @@ class HomePage extends StatelessWidget {
                                   cursor: SystemMouseCursors.click,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, '/poses');
+                                      Navigator.pushNamed(context, '/asanas');
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
@@ -129,7 +132,7 @@ class HomePage extends StatelessWidget {
                                         ],
                                       ),
                                       child: Text(
-                                        "Explore Poses",
+                                        "Explore Asanas",
                                         style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
@@ -199,6 +202,26 @@ class HomePage extends StatelessWidget {
         },
         child: Text(
           title,
+          style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  // 🔥 NEW Chat Button with Icon
+  Widget chatButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: TextButton.icon(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            '/chat',
+          ); // Make sure you create chat route
+        },
+        icon: const Icon(Icons.message, color: Colors.white),
+        label: Text(
+          "Chat With Us",
           style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
         ),
       ),

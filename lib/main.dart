@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
 import 'screens/about.dart';
-import 'screens/poses.dart';
+import 'screens/asanas.dart';
 import 'screens/bmi.dart';
 import 'screens/stress.dart';
 import 'screens/contact.dart';
@@ -23,7 +23,7 @@ class YogaApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/about': (context) => const AboutPage(),
-        '/poses': (context) => const PosesPage(),
+        '/asanas': (context) => const AsanasPage(),
         '/bmi': (context) => const BMIPage(),
         '/stress': (context) => const StressPage(),
         '/contact': (context) => const ContactPage(),
