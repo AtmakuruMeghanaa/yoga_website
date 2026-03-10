@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+import '../widgets/ai_chat_panel.dart';
+import '../language_provider.dart';
+import '../translations.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool isChatOpen = false;
+
+  void toggleChat() {
+    setState(() {
+      isChatOpen = !isChatOpen;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    /// 🌍 CURRENT LANGUAGE
+    final language = context.watch<LanguageProvider>().currentLanguage;
+    final text = translations[language]!;
+
     return Scaffold(
       body: Stack(
         children: [
-          // 🔹 Background Image
+          /// 🔹 BACKGROUND IMAGE
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -19,21 +41,22 @@ class HomePage extends StatelessWidget {
             ),
           ),
 
-          // 🔹 Soft Overlay
+          /// 🔹 DARK OVERLAY
           Container(color: const Color(0xFF4B7783).withOpacity(0.7)),
 
-          // 🔹 Main Content
+          /// 🔹 MAIN CONTENT
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
               child: Column(
                 children: [
-                  // 🔹 Top Navigation
+                  /// 🔹 NAVBAR
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      /// LOGO TITLE
                       Text(
-                        "Yoga Awareness Portal",
+                        text["title"]!,
                         style: GoogleFonts.lato(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -41,14 +64,14 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
 
+                      /// NAVIGATION
                       Row(
                         children: [
-                          navButton(context, "About", '/about'),
-                          navButton(context, "BMI", '/bmi'),
-                          navButton(context, "Stress", '/stress'),
+                          navButton(context, text["about"]!, '/about'),
+                          navButton(context, text["bmi"]!, '/bmi'),
+                          navButton(context, text["stress"]!, '/stress'),
 
-                          // 🔥 NEW CHAT BUTTON
-                          chatButton(context),
+                          languageButton(context),
                         ],
                       ),
                     ],
@@ -56,7 +79,7 @@ class HomePage extends StatelessWidget {
 
                   const SizedBox(height: 120),
 
-                  // 🔹 HERO SECTION (Text on RIGHT)
+                  /// 🔹 HERO SECTION
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -65,8 +88,9 @@ class HomePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// TAGLINE
                             Text(
-                              "Breathe • Flow • Grow",
+                              text["tagline"]!,
                               style: GoogleFonts.dancingScript(
                                 fontSize: 26,
                                 color: const Color.fromARGB(255, 3, 0, 10),
@@ -75,8 +99,9 @@ class HomePage extends StatelessWidget {
 
                             const SizedBox(height: 20),
 
+                            /// HERO TITLE
                             Text(
-                              "DISCOVER YOUR POTENTIAL\nUNLOCK THE BENEFITS\nOF YOGA PRACTICE",
+                              text["heroTitle"]!,
                               style: GoogleFonts.playfairDisplay(
                                 fontSize: 42,
                                 fontWeight: FontWeight.bold,
@@ -87,8 +112,9 @@ class HomePage extends StatelessWidget {
 
                             const SizedBox(height: 20),
 
+                            /// DESCRIPTION
                             Text(
-                              "Improve mental health, reduce stress, and stay physically fit through guided yoga practices and smart self-assessment tools.",
+                              text["description"]!,
                               style: GoogleFonts.lato(
                                 fontSize: 17,
                                 color: Colors.white70,
@@ -98,46 +124,34 @@ class HomePage extends StatelessWidget {
 
                             const SizedBox(height: 40),
 
-                            // 🔥 Modern Buttons
+                            /// BUTTONS
                             Row(
                               children: [
-                                // 🔥 Gradient Explore Button
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/asanas');
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 35,
-                                        vertical: 16,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(40),
-                                        gradient: const LinearGradient(
-                                          colors: [
-                                            Color(0xFF1EBE3C),
-                                            Color(0xFF0A8F2F),
-                                          ],
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.green.withOpacity(
-                                              0.4,
-                                            ),
-                                            blurRadius: 15,
-                                            offset: const Offset(0, 6),
-                                          ),
+                                /// EXPLORE ASANAS BUTTON
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/asanas');
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: 16,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(40),
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xFF1EBE3C),
+                                          Color(0xFF0A8F2F),
                                         ],
                                       ),
-                                      child: Text(
-                                        "Explore Asanas",
-                                        style: GoogleFonts.lato(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
+                                    ),
+                                    child: Text(
+                                      text["exploreAsanas"]!,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -145,33 +159,30 @@ class HomePage extends StatelessWidget {
 
                                 const SizedBox(width: 25),
 
-                                // 🌿 Glass Contact Button
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/contact');
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 35,
-                                        vertical: 16,
+                                /// CONTACT BUTTON
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/contact');
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: 16,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(40),
+                                      color: Colors.white.withOpacity(0.15),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1.5,
                                       ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(40),
-                                        color: Colors.white.withOpacity(0.15),
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 1.5,
-                                        ),
-                                      ),
-                                      child: Text(
-                                        "Contact Us",
-                                        style: GoogleFonts.lato(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
+                                    ),
+                                    child: Text(
+                                      text["contact"]!,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -187,12 +198,30 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+
+          /// 🤖 AI CHAT PANEL
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            right: isChatOpen ? 0 : -420,
+            top: 60,
+            bottom: 60,
+            child: SizedBox(
+              width: 400,
+              child: AIChatPanel(
+                onClose: () {
+                  setState(() {
+                    isChatOpen = false;
+                  });
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // 🔹 Navigation Button
+  /// 🔹 NAV BUTTON
   Widget navButton(BuildContext context, String title, String route) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -208,21 +237,27 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // 🔥 NEW Chat Button with Icon
-  Widget chatButton(BuildContext context) {
+  /// 🌍 LANGUAGE SELECTOR
+  Widget languageButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: TextButton.icon(
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            '/chat',
-          ); // Make sure you create chat route
-        },
-        icon: const Icon(Icons.message, color: Colors.white),
-        label: Text(
-          "Chat With Us",
-          style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          icon: const Icon(Icons.language, color: Colors.white),
+          iconEnabledColor: Colors.white,
+          dropdownColor: Colors.white,
+          style: const TextStyle(color: Colors.black, fontSize: 16),
+          value: context.watch<LanguageProvider>().currentLanguage,
+
+          items: const [
+            DropdownMenuItem(value: "en", child: Text("English")),
+            DropdownMenuItem(value: "hi", child: Text("हिंदी")),
+            DropdownMenuItem(value: "te", child: Text("తెలుగు")),
+          ],
+
+          onChanged: (value) {
+            context.read<LanguageProvider>().changeLanguage(value!);
+          },
         ),
       ),
     );

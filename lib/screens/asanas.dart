@@ -1,154 +1,150 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../language_provider.dart';
+import '../translations.dart';
 
 class AsanasPage extends StatelessWidget {
   const AsanasPage({super.key});
 
-  final List<Map<String, String>> asanas = const [
-    {
-      "name": "Tadasana",
-      "image": "assets/images/tadasana.png",
-      "description":
-          "Tadasana, also known as Mountain Pose, improves posture and body alignment.",
-      "benefits":
-          "Enhances balance, strengthens legs, and increases concentration.",
-    },
-    {
-      "name": "Vrikshasana",
-      "image": "assets/images/vrikshasana.png",
-      "description":
-          "Vrikshasana, or Tree Pose, is a balancing posture that improves stability.",
-      "benefits":
-          "Improves focus, strengthens legs, and enhances coordination.",
-    },
-    {
-      "name": "Bhujangasana",
-      "image": "assets/images/bhujangasana.png",
-      "description":
-          "Bhujangasana, or Cobra Pose, strengthens the spine and opens the chest.",
-      "benefits":
-          "Reduces stress, improves flexibility, and strengthens back muscles.",
-    },
-    {
-      "name": "Balasana",
-      "image": "assets/images/balasana.png",
-      "description":
-          "Balasana, or Child’s Pose, is a calming and restorative posture.",
-      "benefits":
-          "Relieves anxiety, relaxes the body, and stretches the lower back.",
-    },
-    {
-      "name": "Surya Namaskar",
-      "image": "assets/images/suryanamaskar.png",
-      "description":
-          "Surya Namaskar is a sequence of yoga poses performed in a smooth flow.",
-      "benefits":
-          "Improves flexibility, boosts energy, and enhances overall fitness.",
-    },
-  ];
-
-  void _showImage(BuildContext context, String imagePath) {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(imagePath, fit: BoxFit.contain),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final language = context.watch<LanguageProvider>().currentLanguage;
+    final text = translations[language]!;
+
+    final List<Map<String, String>> asanas = [
+      {
+        "name": text["surya"]!,
+        "image":
+            "https://images.unsplash.com/photo-1552286450-4a669f880062?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3VyeWElMjBuYW1hc2thcnxlbnwwfHwwfHx8MA%3D%3D",
+        "benefits":
+            "Improves flexibility, boosts blood circulation, strengthens muscles.",
+      },
+      {
+        "name": text["vriksha"]!,
+        "image":
+            "https://plus.unsplash.com/premium_photo-1682093279549-04f9f3a90e09?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dnJpa3NoYXNhbmF8ZW58MHx8MHx8fDA%3D",
+        "benefits":
+            "Improves balance, strengthens legs, enhances concentration.",
+      },
+      {
+        "name": text["bhujanga"]!,
+        "image":
+            "https://images.unsplash.com/photo-1717821552922-61e18814a44a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Ymh1amFuZ2FzYW5hfGVufDB8fDB8fHww",
+        "benefits": "Strengthens spine, opens chest, relieves stress.",
+      },
+      {
+        "name": text["tadasana"]!,
+        "image":
+            "https://plus.unsplash.com/premium_photo-1669446008075-ef763c28d75b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGFkYXNhbmF8ZW58MHx8MHx8fDA%3D",
+        "benefits": "Improves posture, strengthens legs, increases stability.",
+      },
+      {
+        "name": text["trikonasana"]!,
+        "image":
+            "https://images.unsplash.com/photo-1767611097404-7b24671abf40?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHJpa29uYXNhbmF8ZW58MHx8MHx8fDA%3D",
+        "benefits":
+            "Improves digestion, stretches muscles, increases flexibility.",
+      },
+      {
+        "name": text["padmasana"]!,
+        "image":
+            "https://plus.unsplash.com/premium_photo-1663011335736-03b4aae89827?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGFkbWFzYW5hfGVufDB8fDB8fHww",
+        "benefits": "Calms mind, improves posture, helps meditation.",
+      },
+      {
+        "name": text["vajrasana"]!,
+        "image":
+            "https://media.istockphoto.com/id/2219248999/photo/man-practicing-vajrasana-pose-on-yoga-mat-outdoors.webp?a=1&b=1&s=612x612&w=0&k=20&c=Of80wpTr7LlzM7-2MIXudLEz5MdzNRpLEK2gjRV9dnM=",
+        "benefits": "Improves digestion, strengthens back, enhances breathing.",
+      },
+      {
+        "name": text["shalabhasana"]!,
+        "image":
+            "https://media.istockphoto.com/id/470128462/photo/locust-position-yoga-class-exercise-studio.webp?a=1&b=1&s=612x612&w=0&k=20&c=AH-WogDXgXLaX4aVHQD9fjK5vxqYjpRkqfdCffKmruM=",
+        "benefits": "Strengthens lower back, improves posture, tones abdomen.",
+      },
+    ];
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
+      appBar: AppBar(
+        title: Text(text["exploreAsanas"]!),
+        backgroundColor: const Color(0xFF4B7783),
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
-        child: Column(
-          children: [
-            /// 🔹 Heading
-            Text(
-              "Yoga Asanas",
-              style: GoogleFonts.playfairDisplay(
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            /// 🔹 Grid Layout
-            Expanded(
-              child: GridView.builder(
-                itemCount: asanas.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // 3 per row
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 25,
-                  childAspectRatio: 0.7,
+        child: Center(
+          child: Wrap(
+            spacing: 25,
+            runSpacing: 25,
+            children: asanas.map((asana) {
+              return Container(
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 10,
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                  ],
                 ),
-                itemBuilder: (context, index) {
-                  final asana = asanas[index];
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      /// 🔹 Clickable Image
-                      GestureDetector(
-                        onTap: () => _showImage(context, asana["image"]!),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            asana["image"]!,
-                            height: 170,
-                            fit: BoxFit.cover,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// CLICKABLE IMAGE
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => Dialog(
+                            child: InteractiveViewer(
+                              child: Image.network(asana["image"]!),
+                            ),
                           ),
+                        );
+                      },
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(18),
+                        ),
+                        child: Image.network(
+                          asana["image"]!,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
                         ),
                       ),
+                    ),
 
-                      const SizedBox(height: 10),
-
-                      /// 🔹 Name
-                      Text(
-                        asana["name"]!,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
+                    /// TEXT CONTENT
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            asana["name"]!,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            asana["benefits"]!,
+                            style: const TextStyle(fontSize: 14, height: 1.4),
+                          ),
+                        ],
                       ),
-
-                      const SizedBox(height: 8),
-
-                      /// 🔹 Description (Visible by default)
-                      Text(
-                        asana["description"]!,
-                        style: GoogleFonts.playfairDisplay(fontSize: 14),
-                        textAlign: TextAlign.center,
-                      ),
-
-                      const SizedBox(height: 6),
-
-                      /// 🔹 Benefits (Visible by default)
-                      Text(
-                        asana["benefits"]!,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
