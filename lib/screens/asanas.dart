@@ -4,15 +4,74 @@ import 'package:google_fonts/google_fonts.dart';
 class AsanasPage extends StatelessWidget {
   const AsanasPage({super.key});
 
+  final List<Map<String, String>> asanas = const [
+    {
+      "name": "Tadasana",
+      "image": "assets/images/tadasana.png",
+      "description":
+          "Tadasana, also known as Mountain Pose, improves posture and body alignment.",
+      "benefits":
+          "Enhances balance, strengthens legs, and increases concentration.",
+    },
+    {
+      "name": "Vrikshasana",
+      "image": "assets/images/vrikshasana.png",
+      "description":
+          "Vrikshasana, or Tree Pose, is a balancing posture that improves stability.",
+      "benefits":
+          "Improves focus, strengthens legs, and enhances coordination.",
+    },
+    {
+      "name": "Bhujangasana",
+      "image": "assets/images/bhujangasana.png",
+      "description":
+          "Bhujangasana, or Cobra Pose, strengthens the spine and opens the chest.",
+      "benefits":
+          "Reduces stress, improves flexibility, and strengthens back muscles.",
+    },
+    {
+      "name": "Balasana",
+      "image": "assets/images/balasana.png",
+      "description":
+          "Balasana, or Child’s Pose, is a calming and restorative posture.",
+      "benefits":
+          "Relieves anxiety, relaxes the body, and stretches the lower back.",
+    },
+    {
+      "name": "Surya Namaskar",
+      "image": "assets/images/suryanamaskar.png",
+      "description":
+          "Surya Namaskar is a sequence of yoga poses performed in a smooth flow.",
+      "benefits":
+          "Improves flexibility, boosts energy, and enhances overall fitness.",
+    },
+  ];
+
+  void _showImage(BuildContext context, String imagePath) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(imagePath, fit: BoxFit.contain),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: const EdgeInsets.all(30),
         child: Column(
           children: [
-            /// 🔹 Main Heading
+            /// 🔹 Heading
             Text(
               "Yoga Asanas",
               style: GoogleFonts.playfairDisplay(
@@ -23,122 +82,74 @@ class AsanasPage extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            /// 🔹 Asanas List
+            /// 🔹 Grid Layout
             Expanded(
-              child: ListView(
-                children: const [
-                  AsanaTile(
-                    imagePath: "assets/images/tadasana.png",
-                    name: "Tadasana",
-                    description:
-                        "Tadasana, also known as Mountain Pose, is a foundational standing posture that improves posture and balance.",
-                    benefits:
-                        "Benefits: Enhances body alignment, strengthens legs, and improves concentration.",
-                  ),
+              child: GridView.builder(
+                itemCount: asanas.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // 3 per row
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 25,
+                  childAspectRatio: 0.7,
+                ),
+                itemBuilder: (context, index) {
+                  final asana = asanas[index];
 
-                  AsanaTile(
-                    imagePath: "assets/images/vrikshasana.png",
-                    name: "Vrikshasana",
-                    description:
-                        "Vrikshasana, or Tree Pose, is a balancing pose that requires focus and stability.",
-                    benefits:
-                        "Benefits: Improves balance, strengthens legs, and increases mental focus.",
-                  ),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      /// 🔹 Clickable Image
+                      GestureDetector(
+                        onTap: () => _showImage(context, asana["image"]!),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            asana["image"]!,
+                            height: 170,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
 
-                  AsanaTile(
-                    imagePath: "assets/images/bhujangasana.png",
-                    name: "Bhujangasana",
-                    description:
-                        "Bhujangasana, or Cobra Pose, is a gentle backbend that opens the chest and strengthens the spine.",
-                    benefits:
-                        "Benefits: Reduces stress, improves spinal flexibility, and strengthens back muscles.",
-                  ),
+                      const SizedBox(height: 10),
 
-                  AsanaTile(
-                    imagePath: "assets/images/balasana.png",
-                    name: "Balasana",
-                    description:
-                        "Balasana, also called Child’s Pose, is a resting posture that promotes relaxation.",
-                    benefits:
-                        "Benefits: Calms the mind, relieves back pain, and reduces anxiety.",
-                  ),
+                      /// 🔹 Name
+                      Text(
+                        asana["name"]!,
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
 
-                  AsanaTile(
-                    imagePath: "assets/images/suryanamaskar.png",
-                    name: "Surya Namaskar",
-                    description:
-                        "Surya Namaskar is a sequence of yoga poses performed in a flow to energize the body.",
-                    benefits:
-                        "Benefits: Improves flexibility, boosts circulation, and enhances overall fitness.",
-                  ),
-                ],
+                      const SizedBox(height: 8),
+
+                      /// 🔹 Description (Visible by default)
+                      Text(
+                        asana["description"]!,
+                        style: GoogleFonts.playfairDisplay(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      const SizedBox(height: 6),
+
+                      /// 🔹 Benefits (Visible by default)
+                      Text(
+                        asana["benefits"]!,
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// 🔹 Custom Widget for Each Asana
-class AsanaTile extends StatelessWidget {
-  final String imagePath;
-  final String name;
-  final String description;
-  final String benefits;
-
-  const AsanaTile({
-    super.key,
-    required this.imagePath,
-    required this.name,
-    required this.description,
-    required this.benefits,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.only(bottom: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: ExpansionTile(
-        tilePadding: const EdgeInsets.all(15),
-        childrenPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-
-        /// 🔹 Image + Name (Always Visible)
-        title: Column(
-          children: [
-            Image.asset(imagePath, height: 180, fit: BoxFit.cover),
-            const SizedBox(height: 10),
-            Text(
-              name,
-              style: GoogleFonts.playfairDisplay(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-
-        /// 🔹 Description & Benefits (On Click)
-        children: [
-          Text(
-            description,
-            style: GoogleFonts.playfairDisplay(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            benefits,
-            style: GoogleFonts.playfairDisplay(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }
